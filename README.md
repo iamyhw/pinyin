@@ -36,19 +36,24 @@ RT-Thread online packages
 在打开 pinyin package 后，当进行 bsp 编译时，它会被加入到 bsp 工程中进行编译。
 
 ### 3.1、创建拼音输入法对象
+```
 static input_method_t imepy;
-
+```
 ### 3.2、初始化对象
+```
 //void pinyin_init(input_method_t *ime);
 pinyin_init(&imepy);
-
+```
 ### 3.3、给输入法对象传入拼音字符串
+```
 //void pinyin_getin_letter(input_method_t *ime, char c);
 pinyin_getin_letter(&imepy, c);
+```
 参数c: 取值字母 a-z,A-Z
 
 ### 3.4、通过对象的一些成员变量获取检索结果
 |对象成员           |描述                     |
+|-------------------|-------------------------|
 |imepy.type         |当前检索的是字库还是词库 | 
 |imepy.dicts        |字库指针                 | 
 |imepy.terms        |词库指针                 |
@@ -73,23 +78,31 @@ pinyin_getin_letter(&imepy, c);
 如果仅仅处理数据,可以使用impy.s[].
 
 ### 3.5、获取字或词
+```
 //void pinyin_getout_zhstring(input_method_t *ime, char *zhstr, int index);
 rt_uint16_t zh[16] = {0};
 pinyin_getout_zhstring(&imepy, zh, 3); //以上面(1)例子为例,返回"至"
+```
 这个接口函数就是直接取的imepy.s[3]的值.
 区别是使用接口函数时,参数*zhstr可以传入外部缓冲地址,便于应用中使用,
 
 ### 3.6、翻页待选条目
 使用下面这两个接口函数进行翻页,如果存在多页的话!
+```
 void pinyin_page_add(input_method_t *ime); //加一页,类似右翻页
 void pinyin_page_sub(input_method_t *ime); //减一页,类似左翻页
+```
 如果调用了翻页接口函数了,可以再调用下面的函数更新page内容
+```
 void pinyin_generate_page(input_method_t *ime);
+```
 如果用户自己重新实现了翻页功能,需要手动调用该函数刷新page!
 
 ### 3.6、取消输入的拼音
 可以调用下面的接口函数对输入的字符串退格,即去除最后一个录入,一次只能取消一个字符.
+```
 void pinyin_backspace(input_method_t *ime);
+```
 
 ### 3.7、pinyin输入法支持的字词典数据格式
 pinyin输入法可以同时支持字典和词典数据结构.
