@@ -866,24 +866,9 @@ void pinyin_generate_page(input_method_t *ime)
 
 void pinyin_getout_zhstring(input_method_t *ime, char *zhstr, int index)
 {
-    if (index < 0  || index >= ime->cnt_cur_page) return;
-
-    if (ime->type == IME_TYPE_DICTS)
-    {
-        rt_uint16_t *p = ime->zhbuf;
-        p += ime->page_index * IME_WPP;
-
-        if (index > ime->cnt_cur_page) return;
-        rt_memcpy(zhstr, p + index, 2);
-    }
-    else
-    {
-        char *p = ime->zhbuf;
-        rt_uint16_t start = 0, k = 0;
-
-        if (index > ime->cnt_cur_page) return;
-        rt_memcpy(zhstr, ime->s[index], ime->wordcnt * 2);
-    }
+    if (index < 0 ||index > ime->cnt_cur_page) 
+        return;
+    rt_memcpy(zhstr, ime->s[index], ime->wordcnt*2);
 }
 
 void pinyin_getin_letter(input_method_t *ime, char c)
