@@ -1,11 +1,11 @@
 /*
  * Copyright (c) 2020-2021, RT-Thread Development Team
  *
- * SPDX-License-Identifier: Apache-2.0
+ * SPDX-License-Identifier: LGPL-2.0
  *
  * Change Logs:
  * Date           Author       Notes
- * 2017/12/30     Bernard      The first version.
+ * 2021/01/09     iamyhw       The first version.
  */
 
 #include "pinyin.h"
