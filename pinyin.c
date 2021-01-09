@@ -809,6 +809,7 @@ void pinyin_generate_page(input_method_t *ime)
 {
 #define S ime->s
 
+    rt_memset(ime->wordstr, 0, IME_WORDSTR_SZ);
     if (ime->zhlen == 0) return;
     rt_memset(S, 0, sizeof(S));
 
@@ -900,7 +901,6 @@ void pinyin_getin_letter(input_method_t *ime, char c)
     if(ime->zhlen >= IME_ZHBUF_MAX) //判断字典大小是否合法
         rt_kprintf("The dictionary cache set is too small!\n");
 
-    rt_memset(ime->wordstr, 0, IME_WORDSTR_SZ);
     pinyin_generate_page(ime);
 }
 
@@ -923,7 +923,6 @@ void pinyin_backspace(input_method_t *ime)
         }
         pinyin_update_zhbuf(ime);
         ime->page_numbs = (ime->zhlen + 8) / 9;
-        rt_memset(ime->wordstr, 0, IME_WORDSTR_SZ);
         pinyin_generate_page(ime);
     }
 }
@@ -934,7 +933,6 @@ void pinyin_page_add(input_method_t *ime)
     {
         if (ime->page_index > 0)
             ime->page_index -= 1;
-        rt_memset(ime->wordstr, 0, IME_WORDSTR_SZ);
         pinyin_generate_page(ime);
     }
 }
@@ -945,7 +943,6 @@ void pinyin_page_sub(input_method_t *ime)
     {
         if ((ime->page_index + 1) < ime->page_numbs)
             ime->page_index += 1;
-        rt_memset(ime->wordstr, 0, IME_WORDSTR_SZ);
         pinyin_generate_page(ime);
     }
 }
