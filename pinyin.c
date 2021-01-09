@@ -822,39 +822,10 @@ void pinyin_generate_page(input_method_t *ime)
             ime->cnt_cur_page = ime->zhlen - ime->page_index * IME_WPP;
         if (ime->cnt_cur_page == 0) return;
         p += ime->page_index * IME_WPP;
-        for (int i = 0; i < ime->cnt_cur_page; i++) rt_memcpy(S[i], p + i, 2);
-
-        switch (ime->cnt_cur_page)
+        for (int i = 0; i < ime->cnt_cur_page; i++) 
         {
-        case 9:
-            sprintf(ime->wordstr, "1.%s 2.%s 3.%s 4.%s 5.%s 6.%s 7.%s 8.%s 9.%s", S[0], S[1], S[2], S[3], S[4], S[5], S[6], S[7], S[8]);
-            break;
-        case 8:
-            sprintf(ime->wordstr, "1.%s 2.%s 3.%s 4.%s 5.%s 6.%s 7.%s 8.%s", S[0], S[1], S[2], S[3], S[4], S[5], S[6], S[7]);
-            break;
-        case 7:
-            sprintf(ime->wordstr, "1.%s 2.%s 3.%s 4.%s 5.%s 6.%s 7.%s", S[0], S[1], S[2], S[3], S[4], S[5], S[6]);
-            break;
-        case 6:
-            sprintf(ime->wordstr, "1.%s 2.%s 3.%s 4.%s 5.%s 6.%s", S[0], S[1], S[2], S[3], S[4], S[5]);
-            break;
-        case 5:
-            sprintf(ime->wordstr, "1.%s 2.%s 3.%s 4.%s 5.%s", S[0], S[1], S[2], S[3], S[4]);
-            break;
-        case 4:
-            sprintf(ime->wordstr, "1.%s 2.%s 3.%s 4.%s", S[0], S[1], S[2], S[3]);
-            break;
-        case 3:
-            sprintf(ime->wordstr, "1.%s 2.%s 3.%s", S[0], S[1], S[2]);
-            break;
-        case 2:
-            sprintf(ime->wordstr, "1.%s 2.%s", S[0], S[1]);
-            break;
-        case 1:
-            sprintf(ime->wordstr, "1.%s", S[0]);
-            break;
-        case 0:
-            break;
+            rt_memcpy(S[i], p + i, 2);
+            sprintf(ime->wordstr, "%s%d.%s ", ime->wordstr, i+1, S[i]);
         }
     }
     else //if(ime->type==IME_TYPE_TERMS) ´Êµä
@@ -878,6 +849,7 @@ void pinyin_generate_page(input_method_t *ime)
         for (int i = 0; i < ime->cnt_cur_page; i++)
         {
             rt_memcpy(S[i], p, ime->wordcnt * 2);
+            sprintf(ime->wordstr, "%s%d.%s ", ime->wordstr, i+1, S[i]);
             while (*p)
             {
                 if (*p == ',' || *p == ' ')
@@ -887,30 +859,6 @@ void pinyin_generate_page(input_method_t *ime)
                 }
                 p++;
             }
-        }
-
-        switch (ime->cnt_cur_page)
-        {
-        case 6:
-            sprintf(ime->wordstr, "1.%s 2.%s 3.%s 4.%s 5.%s 6.%s", ime->s[0], S[1], S[2], S[3], S[4], S[5]);
-            break;
-        case 5:
-            sprintf(ime->wordstr, "1.%s 2.%s 3.%s 4.%s 5.%s", S[0], S[1], S[2], S[3], S[4]);
-            break;
-        case 4:
-            sprintf(ime->wordstr, "1.%s 2.%s 3.%s 4.%s", S[0], S[1], S[2], S[3]);
-            break;
-        case 3:
-            sprintf(ime->wordstr, "1.%s 2.%s 3.%s", S[0], S[1], S[2]);
-            break;
-        case 2:
-            sprintf(ime->wordstr, "1.%s 2.%s", S[0], S[1]);
-            break;
-        case 1:
-            sprintf(ime->wordstr, "1.%s", S[0]);
-            break;
-        case 0:
-            break;
         }
     }
 }
